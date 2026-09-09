@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "6205e96421078707de4c5091156cccbd1ecd318dc866c51f0224bbd101b63613"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "5bc91c34cedcac47d83da7cb44fbdea1b04581796368e110a1e16eda3d4f3115"
   license "MIT"
 
   depends_on "python@3.12"
@@ -33,8 +33,7 @@ class TeetimeMonitor < Formula
       fixed install location -- pick one directory and always run it from there,
       e.g.:
         mkdir -p ~/teetime-monitor && cd ~/teetime-monitor
-        #{libexec}/bin/python -m src.credentials_screen   # sets up .env
-        teetime-monitor                                   # first run creates clubs/, data/
+        teetime-monitor   # opens on the club browser -- 'r' or 'l' sets up login inline
 
       See the README for the full setup walkthrough:
         https://github.com/ltdan-88/teetime-monitor#setup
