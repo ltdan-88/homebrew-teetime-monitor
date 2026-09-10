@@ -33,7 +33,7 @@ class TeetimeMonitor < Formula
       fixed install location -- pick one directory and always run it from there,
       e.g.:
         mkdir -p ~/teetime-monitor && cd ~/teetime-monitor
-        teetime-monitor   # opens on the club browser -- 'r' or 'l' sets up login inline
+        teetime-monitor   # shows login setup first if nothing's configured yet
 
       See the README for the full setup walkthrough:
         https://github.com/ltdan-88/teetime-monitor#setup
