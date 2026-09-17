@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.27.0.tar.gz"
-  sha256 "615beacbf4df497a62966f8571f3954c7fd309b2c85eac52bede80d7240ce564"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.28.0.tar.gz"
+  sha256 "830bca89941b7a432ed72bab8670cb3253a1d9367b11bfab7b4c9aa7321ad571"
   license "MIT"
 
   depends_on "python@3.12"
@@ -20,6 +20,10 @@ class TeetimeMonitor < Formula
     system libexec/"bin/pip", "install", "--upgrade", "pip"
     system libexec/"bin/pip", "install", buildpath
     bin.install_symlink libexec/"bin/teetime-monitor"
+    # The unattended scraper the README's launchd agent runs. Without this symlink it
+    # only exists inside libexec, and the documented
+    # /opt/homebrew/bin/teetime-monitor-scrape path wouldn't resolve at all.
+    bin.install_symlink libexec/"bin/teetime-monitor-scrape"
   end
 
   def caveats
