@@ -1,15 +1,15 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.25.2.tar.gz"
-  sha256 "84284b90be9140f9f42258f2af68b9245c4a7ebd1cc576e63295020fa612673b"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.26.0.tar.gz"
+  sha256 "bd15068f96e280e17a7d0fa727448ddfa77d052714005ed46bda503abb4120c6"
   license "MIT"
 
   depends_on "python@3.12"
 
   # Deliberately not Language::Python::Virtualenv's own pip_install_and_link -- that
-  # helper always passes pip `--no-deps`, expecting every dependency (playwright,
-  # textual, anthropic, pydantic, beautifulsoup4, and their own transitive deps) as
+  # helper always passes pip `--no-deps`, expecting every dependency (textual,
+  # anthropic, pydantic, beautifulsoup4, and their own transitive deps) as
   # a separately vendored `resource` block, which is the right call for
   # homebrew-core's own reproducibility bar but a lot of upkeep for a personal tap.
   # A plain venv + full `pip install .` instead, pulling straight from PyPI at
@@ -24,10 +24,6 @@ class TeetimeMonitor < Formula
 
   def caveats
     <<~EOS
-      teetime-monitor logs into pc caddie itself, which needs a real Chromium
-      binary for Playwright -- a one-time download after install:
-        #{libexec}/bin/python -m playwright install chromium
-
       Like `terraform`/`docker-compose`, this reads its own state (saved clubs,
       credentials, scrape history) from whatever directory you run it in, not a
       fixed install location -- pick one directory and always run it from there,
