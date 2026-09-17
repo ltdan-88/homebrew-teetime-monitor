@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.30.1.tar.gz"
-  sha256 "896df43370dc81d057e4a6b2f2f73547f6751323980d8e556fef9a09c44169e1"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.31.0.tar.gz"
+  sha256 "02a8288b17652643667d3981a4ba0d94c8cfc55d2b58a85f26ebf21d718da48f"
   license "MIT"
 
   depends_on "python@3.12"
@@ -28,12 +28,12 @@ class TeetimeMonitor < Formula
 
   def caveats
     <<~EOS
-      Like `terraform`/`docker-compose`, this reads its own state (saved clubs,
-      credentials, scrape history) from whatever directory you run it in, not a
-      fixed install location -- pick one directory and always run it from there,
-      e.g.:
-        mkdir -p ~/teetime-monitor && cd ~/teetime-monitor
-        teetime-monitor   # shows login setup first if nothing's configured yet
+      State lives in two fixed locations, so it works from any directory:
+        ~/.config/teetime-monitor/        clubs, login, preferences
+        ~/.local/share/teetime-monitor/   scrape history
+
+      Upgrading from before 0.31.0? The first launch copies ./clubs, ./data and
+      ./.env across from wherever you used to run it, and says what it moved.
 
       See the README for the full setup walkthrough:
         https://github.com/ltdan-88/teetime-monitor#setup
