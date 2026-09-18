@@ -1,11 +1,21 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.35.0.tar.gz"
-  sha256 "413ac074bf29ff1a69c5851fd5944a07d5b5820d3f26ac0e40de2141372d11ac"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.36.0.tar.gz"
+  sha256 "b045562c140c60553ebd2ddbe6f9f177ceaf62e11f7931c28240be7146e7887e"
   license "MIT"
 
   depends_on "python@3.12"
+  # No `depends_on xcode:` for `swiftc` (the .app build, below) -- tried first,
+  # and reverted for a confirmed reason: Homebrew's own `XcodeRequirement` demands
+  # a full Xcode.app install ("A full installation of Xcode.app is required...
+  # Installing just the Command Line Tools is not sufficient"), which directly
+  # contradicts this project's own verified "Command Line Tools only, no Xcode"
+  # rule for the Swift prototype (prototypes/macos-swift/README.md) -- every build
+  # this whole session ran against bare CLT, with no Xcode.app on the machine at
+  # all. If `swiftc` genuinely isn't present, the build step below fails on its
+  # own with a clear command-not-found error -- an honest failure, not a
+  # dependency this formula can correctly express with Homebrew's own DSL.
 
   # Deliberately not Language::Python::Virtualenv's own pip_install_and_link -- that
   # helper always passes pip `--no-deps`, expecting every dependency (textual,
@@ -33,6 +43,29 @@ class TeetimeMonitor < Formula
     # Same reasoning, for the Swift prototype's add-a-club (v0.35.0).
     bin.install_symlink libexec/"bin/teetime-monitor-directory-refresh"
     bin.install_symlink libexec/"bin/teetime-monitor-add-club"
+
+    # The macOS Swift prototype's own .app (v0.36.0) -- built by the exact same
+    # build.sh a source checkout uses directly (see prototypes/macos-swift/
+    # README.md), not a reimplementation of its swiftc/Info.plist/codesign steps
+    # here, so the two can't quietly drift apart. It depends on the console
+    # scripts symlinked above at fixed paths (see that README's own "isn't
+    # standalone" note) -- there's no meaningful order requirement, but it only
+    # ever actually works once those exist, which they already do by this point.
+    #
+    # Placed in the Cellar only, not symlinked into /Applications -- tried, and
+    # reverted for a confirmed reason: `install` (and `post_install`, checked the
+    # same way) both run inside Homebrew's own build sandbox
+    # (formula_installer.rb's `Sandbox.run_or_fork`), which only allow-lists
+    # writes under the Cellar/temp/cache -- a real, live `File.symlink` attempt
+    # to /Applications from here failed with `Errno::EPERM`, not a guess. There's
+    # no per-formula DSL to extend that allow-list (the writable paths are fixed
+    # by formula_installer.rb itself, not something `install`'s own code can
+    # opt into). `caveats` below prints the one command that does it, to run
+    # once outside the sandbox -- the standard way a Formula (as opposed to a
+    # Cask, whose whole job is exactly this placement) reaches outside the
+    # Cellar for something a plain formula genuinely can't do from `install`.
+    system "prototypes/macos-swift/build.sh"
+    cp_r buildpath/"prototypes/macos-swift/TeetimeMonitor.app", prefix
   end
 
   def caveats
@@ -44,6 +77,16 @@ class TeetimeMonitor < Formula
       Upgrading from before 0.31.0? The first launch copies ./clubs, ./data and
       ./.env across from wherever you used to run it, and says what it moved.
 
+      A macOS GUI prototype is also installed, inside this formula's own Cellar
+      (not /Applications -- Homebrew's build sandbox won't let a plain Formula
+      write there, unlike a Cask). Open it directly:
+        open #{opt_prefix}/TeetimeMonitor.app
+      Or make it appear in Launchpad/Spotlight like a normal app, once:
+        ln -sf #{opt_prefix}/TeetimeMonitor.app /Applications/
+      It's a companion to the pieces above, not a replacement: it shells out to
+      the teetime-monitor-* console scripts this same install just symlinked, so
+      it only works alongside them, never on its own.
+
       See the README for the full setup walkthrough:
         https://github.com/ltdan-88/teetime-monitor#setup
     EOS
@@ -51,5 +94,6 @@ class TeetimeMonitor < Formula
 
   test do
     system libexec/"bin/python", "-c", "from src import tui"
+    assert_predicate prefix/"TeetimeMonitor.app/Contents/MacOS/TeetimeMonitor", :executable?
   end
 end
