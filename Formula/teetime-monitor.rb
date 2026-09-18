@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.33.0.tar.gz"
-  sha256 "ac49c7b3bfde07b0f5035b599fb2f91c7ad806cb4c41bd484bfbe73d4890b4e5"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.34.0.tar.gz"
+  sha256 "73a3344cdf38669dca4bc8a911be031d7b2933e06598b646c49fbdaa7ebd533a"
   license "MIT"
 
   depends_on "python@3.12"
@@ -28,6 +28,8 @@ class TeetimeMonitor < Formula
     # the same way it already looks up teetime-monitor-scrape -- needs the same
     # symlink treatment or it's only reachable from inside libexec.
     bin.install_symlink libexec/"bin/teetime-monitor-login"
+    # Same reasoning, for the Swift prototype's ad hoc search (v0.34.0).
+    bin.install_symlink libexec/"bin/teetime-monitor-search"
   end
 
   def caveats
