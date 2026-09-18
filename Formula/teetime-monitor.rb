@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.34.0.tar.gz"
-  sha256 "73a3344cdf38669dca4bc8a911be031d7b2933e06598b646c49fbdaa7ebd533a"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.35.0.tar.gz"
+  sha256 "413ac074bf29ff1a69c5851fd5944a07d5b5820d3f26ac0e40de2141372d11ac"
   license "MIT"
 
   depends_on "python@3.12"
@@ -30,6 +30,9 @@ class TeetimeMonitor < Formula
     bin.install_symlink libexec/"bin/teetime-monitor-login"
     # Same reasoning, for the Swift prototype's ad hoc search (v0.34.0).
     bin.install_symlink libexec/"bin/teetime-monitor-search"
+    # Same reasoning, for the Swift prototype's add-a-club (v0.35.0).
+    bin.install_symlink libexec/"bin/teetime-monitor-directory-refresh"
+    bin.install_symlink libexec/"bin/teetime-monitor-add-club"
   end
 
   def caveats
