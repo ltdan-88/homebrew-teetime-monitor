@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.32.0.tar.gz"
-  sha256 "24165a9ba4b558b255af9ddce8e38018c9f1f2893ee18cf9cc511af7bf324892"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.33.0.tar.gz"
+  sha256 "ac49c7b3bfde07b0f5035b599fb2f91c7ad806cb4c41bd484bfbe73d4890b4e5"
   license "MIT"
 
   depends_on "python@3.12"
@@ -24,6 +24,10 @@ class TeetimeMonitor < Formula
     # only exists inside libexec, and the documented
     # /opt/homebrew/bin/teetime-monitor-scrape path wouldn't resolve at all.
     bin.install_symlink libexec/"bin/teetime-monitor-scrape"
+    # The macOS Swift prototype's login (v0.33.0) shells out to this by absolute path
+    # the same way it already looks up teetime-monitor-scrape -- needs the same
+    # symlink treatment or it's only reachable from inside libexec.
+    bin.install_symlink libexec/"bin/teetime-monitor-login"
   end
 
   def caveats
