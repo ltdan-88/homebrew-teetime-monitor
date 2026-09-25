@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.40.0.tar.gz"
-  sha256 "11be2505ce40dc24653569ce2fa48e68508ba4d9f1538bdc968846c842273350"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.40.1.tar.gz"
+  sha256 "43af9c4243e404abbc04499b0e836fd611c8b95a2e2dbb1ea9800f6cdf6aa18f"
   license "MIT"
 
   depends_on "python@3.12"
@@ -11,7 +11,7 @@ class TeetimeMonitor < Formula
   # a full Xcode.app install ("A full installation of Xcode.app is required...
   # Installing just the Command Line Tools is not sufficient"), which directly
   # contradicts this project's own verified "Command Line Tools only, no Xcode"
-  # rule for the Swift prototype (prototypes/macos-swift/README.md) -- every build
+  # rule for the macOS GUI (macos/README.md) -- every build
   # this whole session ran against bare CLT, with no Xcode.app on the machine at
   # all. If `swiftc` genuinely isn't present, the build step below fails on its
   # own with a clear command-not-found error -- an honest failure, not a
@@ -34,22 +34,23 @@ class TeetimeMonitor < Formula
     # only exists inside libexec, and the documented
     # /opt/homebrew/bin/teetime-monitor-scrape path wouldn't resolve at all.
     bin.install_symlink libexec/"bin/teetime-monitor-scrape"
-    # The macOS Swift prototype's login (v0.33.0) shells out to this by absolute path
+    # The macOS GUI's login (v0.33.0) shells out to this by absolute path
     # the same way it already looks up teetime-monitor-scrape -- needs the same
     # symlink treatment or it's only reachable from inside libexec.
     bin.install_symlink libexec/"bin/teetime-monitor-login"
-    # Same reasoning, for the Swift prototype's ad hoc search (v0.34.0).
+    # Same reasoning, for the macOS GUI's ad hoc search (v0.34.0).
     bin.install_symlink libexec/"bin/teetime-monitor-search"
-    # Same reasoning, for the Swift prototype's add-a-club (v0.35.0).
+    # Same reasoning, for the macOS GUI's add-a-club (v0.35.0).
     bin.install_symlink libexec/"bin/teetime-monitor-directory-refresh"
     bin.install_symlink libexec/"bin/teetime-monitor-add-club"
-    # Same reasoning, for the Swift prototype's "browse before saving" (v0.40.0).
+    # Same reasoning, for the macOS GUI's "browse before saving" (v0.40.0).
     bin.install_symlink libexec/"bin/teetime-monitor-preview-club"
 
-    # The macOS Swift prototype's own .app (v0.36.0) -- built by the exact same
-    # build.sh a source checkout uses directly (see prototypes/macos-swift/
-    # README.md), not a reimplementation of its swiftc/Info.plist/codesign steps
-    # here, so the two can't quietly drift apart. It depends on the console
+    # The macOS GUI's own .app (v0.36.0; moved from prototypes/macos-swift/ to
+    # macos/ in v0.40.0) -- built by the exact same build.sh a source checkout
+    # uses directly (see macos/README.md), not a reimplementation of its
+    # swiftc/Info.plist/codesign steps here, so the two can't quietly drift
+    # apart. It depends on the console
     # scripts symlinked above at fixed paths (see that README's own "isn't
     # standalone" note) -- there's no meaningful order requirement, but it only
     # ever actually works once those exist, which they already do by this point.
@@ -66,8 +67,8 @@ class TeetimeMonitor < Formula
     # once outside the sandbox -- the standard way a Formula (as opposed to a
     # Cask, whose whole job is exactly this placement) reaches outside the
     # Cellar for something a plain formula genuinely can't do from `install`.
-    system "prototypes/macos-swift/build.sh"
-    cp_r buildpath/"prototypes/macos-swift/TeetimeMonitor.app", prefix
+    system "macos/build.sh"
+    cp_r buildpath/"macos/TeetimeMonitor.app", prefix
   end
 
   def caveats
@@ -79,7 +80,7 @@ class TeetimeMonitor < Formula
       Upgrading from before 0.31.0? The first launch copies ./clubs, ./data and
       ./.env across from wherever you used to run it, and says what it moved.
 
-      A macOS GUI prototype is also installed, inside this formula's own Cellar
+      A native macOS GUI is also installed, inside this formula's own Cellar
       (not /Applications -- Homebrew's build sandbox won't let a plain Formula
       write there, unlike a Cask). Open it directly:
         open #{opt_prefix}/TeetimeMonitor.app
