@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.36.0.tar.gz"
-  sha256 "b045562c140c60553ebd2ddbe6f9f177ceaf62e11f7931c28240be7146e7887e"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.40.0.tar.gz"
+  sha256 "11be2505ce40dc24653569ce2fa48e68508ba4d9f1538bdc968846c842273350"
   license "MIT"
 
   depends_on "python@3.12"
@@ -43,6 +43,8 @@ class TeetimeMonitor < Formula
     # Same reasoning, for the Swift prototype's add-a-club (v0.35.0).
     bin.install_symlink libexec/"bin/teetime-monitor-directory-refresh"
     bin.install_symlink libexec/"bin/teetime-monitor-add-club"
+    # Same reasoning, for the Swift prototype's "browse before saving" (v0.40.0).
+    bin.install_symlink libexec/"bin/teetime-monitor-preview-club"
 
     # The macOS Swift prototype's own .app (v0.36.0) -- built by the exact same
     # build.sh a source checkout uses directly (see prototypes/macos-swift/
