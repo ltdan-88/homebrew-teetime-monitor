@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.43.2.tar.gz"
-  sha256 "4e02d295281f1b14d2c9002575ecf60fafe3d9f3d1642c8a23a02ee952f1ee6b"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.44.0.tar.gz"
+  sha256 "0716c67d2961e589e9e7ede8042196e177e210d2babdfafb5fa1dd96b74674a9"
   license "MIT"
 
   depends_on "python@3.12"
@@ -47,6 +47,8 @@ class TeetimeMonitor < Formula
     bin.install_symlink libexec/"bin/teetime-monitor-preview-club"
     # Same reasoning, for the macOS GUI's AI provider credentials (v0.43.0).
     bin.install_symlink libexec/"bin/teetime-monitor-ai-login"
+    # Same reasoning, for the macOS GUI's Overview recommended pick (v0.44.0).
+    bin.install_symlink libexec/"bin/teetime-monitor-picks"
 
     # The macOS GUI's own .app (v0.36.0; moved from prototypes/macos-swift/ to
     # macos/ in v0.40.0) -- built by the exact same build.sh a source checkout
