@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.42.1.tar.gz"
-  sha256 "88c580156b49383244eef646c0c5d73a5e683e8c220c5f7bd8b1e24911ccb82b"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.43.0.tar.gz"
+  sha256 "bbbfaf23dd102cea2b83751837458b6b4a61754342c211be7d0b386e701ebbbe"
   license "MIT"
 
   depends_on "python@3.12"
@@ -45,6 +45,8 @@ class TeetimeMonitor < Formula
     bin.install_symlink libexec/"bin/teetime-monitor-add-club"
     # Same reasoning, for the macOS GUI's "browse before saving" (v0.40.0).
     bin.install_symlink libexec/"bin/teetime-monitor-preview-club"
+    # Same reasoning, for the macOS GUI's AI provider credentials (v0.43.0).
+    bin.install_symlink libexec/"bin/teetime-monitor-ai-login"
 
     # The macOS GUI's own .app (v0.36.0; moved from prototypes/macos-swift/ to
     # macos/ in v0.40.0) -- built by the exact same build.sh a source checkout
