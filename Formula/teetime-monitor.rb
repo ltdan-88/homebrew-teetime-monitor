@@ -49,6 +49,9 @@ class TeetimeMonitor < Formula
     bin.install_symlink libexec/"bin/teetime-monitor-ai-login"
     # Same reasoning, for the macOS GUI's Overview recommended pick (v0.44.0).
     bin.install_symlink libexec/"bin/teetime-monitor-picks"
+    # The browser version (v0.74.0, Windows/Linux first, but it runs anywhere): opens the Overview
+    # in a local browser window -- see docs/WEBUI.md.
+    bin.install_symlink libexec/"bin/teetime-monitor-web"
 
     # The macOS GUI's own .app (v0.36.0; moved from prototypes/macos-swift/ to
     # macos/ in v0.40.0) -- built by the exact same build.sh a source checkout
