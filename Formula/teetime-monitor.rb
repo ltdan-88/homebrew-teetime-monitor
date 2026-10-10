@@ -1,8 +1,8 @@
 class TeetimeMonitor < Formula
   desc "Local TUI for monitoring a pc caddie golf club's tee sheet"
   homepage "https://github.com/ltdan-88/teetime-monitor"
-  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.71.5.tar.gz"
-  sha256 "8fbd20092d23d7cf26ec5340a5235195dfe97b01268be7f053431af199180e69"
+  url "https://github.com/ltdan-88/teetime-monitor/archive/refs/tags/v0.72.0.tar.gz"
+  sha256 "cedbd5bb6c7965ded01395bade42f00cb3650f539e5191cc6fe157bc8051a2d4"
   license "MIT"
 
   depends_on "python@3.12"
